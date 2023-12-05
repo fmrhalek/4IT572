@@ -140,6 +140,7 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
-              # Now we have got the access of EC2 and we will start the deploy .
-              ls -la
+              ls -la && \
+              pwd && \
+              echo ${{ secrets.VAULT_PASSWORD}} > ~/.vault_password.txt && \
               '
