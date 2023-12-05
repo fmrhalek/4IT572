@@ -119,20 +119,13 @@ jobs:
       #   env:
       #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       #     FIREBASE_PROJECT: mrhf00-4it572
-
-      - name: multiple command
+      
+     - name: multiple command
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
-<<<<<<< HEAD
-          user: ec2-user
-          key: ${{ secrets.PRIVATE_KEY}}
-   
-=======
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             whoami
             ls -al
-          
->>>>>>> 2865065 (Adding githubaction deploy to EC2)
