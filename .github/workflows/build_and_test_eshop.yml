@@ -119,4 +119,14 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT: mrhf00-4it572
-          
+
+      - name: Deploy app to ec2 instance
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /home/ec2-user
+            ls -a
+          host: ${{ secrets.HOST }}
+          user: ec2-user
+          key: ${{ secrets.PRIVATE_KEY}}
+   
