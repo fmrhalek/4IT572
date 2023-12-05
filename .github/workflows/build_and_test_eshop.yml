@@ -122,41 +122,26 @@ jobs:
       # ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --vault-password-file ~/.vault_password.txt
       # ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --extra-vars "access_key=${{ secrets.AWS_ACCESS_KEY}} secret_key=${{ secrets.AWS_SECRET_KEY}} session_token=${{ secrets.AWS_SESSION_TOKEN}}"
       
-      - name: Set up SSH keys
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          HOST: ${{ secrets.HOST }}
-        
-        run: |
-          mkdir -p ~/.ssh
-          echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+      # - name: Set up SSH keys
+      #   env:
+      #     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      #     HOST: ${{ secrets.HOST }}
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
 
-      - name: multiple command
+      - name: SSH Connect to EC2 Ansible instance
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            whoami
-            ls -al
-      
-      - name: multiple command
-        env:
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          HOSTNAME: ${{secrets.HOST}}
-          USER_NAME: ${{secrets.USERNAME}}
-    
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-
-              ls -la
-              pwd
-              cd 4IT572-Ansible/ansible/
-              echo ${{ secrets.VAULT_PASSWORD}} > ~/.vault_password.txt
-              ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --vault-password-file ~/.vault_password.txt
-              rm ~/.vault_password.txt
-              '
+            ls -la
+            pwd
+            cd 4IT572-Ansible/ansible/
+            echo ${{ secrets.VAULT_PASSWORD}} > ~/.vault_password.txt
+            ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --vault-password-file ~/.vault_password.txt
+            rm ~/.vault_password.txt
