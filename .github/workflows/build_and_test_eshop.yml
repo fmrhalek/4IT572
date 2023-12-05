@@ -120,7 +120,7 @@ jobs:
       #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       #     FIREBASE_PROJECT: mrhf00-4it572
       
-     - name: multiple command
+      - name: multiple command
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
