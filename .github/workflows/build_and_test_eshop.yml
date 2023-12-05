@@ -121,11 +121,14 @@ jobs:
       #     FIREBASE_PROJECT: mrhf00-4it572
       
       - name: Set up SSH keys
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          HOST: ${{ secrets.HOST }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{secrets.HOST}} >> ~/.ssh/known_hosts      
+          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
 
       - name: multiple command
         env:
