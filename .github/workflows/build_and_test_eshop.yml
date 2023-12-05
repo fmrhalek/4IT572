@@ -126,11 +126,13 @@ jobs:
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           HOST: ${{ secrets.HOST }}
+        
         run: |
           mkdir -p ~/.ssh
           echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+      
       - name: multiple command
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
@@ -140,6 +142,7 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
               ls -la
               pwd
               cd 4IT572-Ansible/ansible/
