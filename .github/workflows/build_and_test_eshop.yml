@@ -120,6 +120,7 @@ jobs:
       #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       #     FIREBASE_PROJECT: mrhf00-4it572
       # ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --vault-password-file ~/.vault_password.txt
+      # ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --extra-vars "access_key=${{ secrets.AWS_ACCESS_KEY}} secret_key=${{ secrets.AWS_SECRET_KEY}} session_token=${{ secrets.AWS_SESSION_TOKEN}}"
       
       - name: Set up SSH keys
         env:
@@ -145,6 +146,6 @@ jobs:
               pwd
               cd 4IT572-Ansible/ansible/
               echo ${{ secrets.VAULT_PASSWORD}} > ~/.vault_password.txt
-              ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --extra-vars "access_key=${{ secrets.AWS_ACCESS_KEY}} secret_key=${{ secrets.AWS_SECRET_KEY}} session_token=${{ secrets.AWS_SESSION_TOKEN}}"
+              ansible-playbook ec2_deploy.yml --user ec2-user --key-file test.pem --vault-password-file ~/.vault_password.txt
               rm ~/.vault_password.txt
               '
